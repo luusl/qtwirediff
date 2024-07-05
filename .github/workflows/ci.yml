@@ -59,28 +59,8 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Wirediff (Windows)
-        path: release/qtwirediff.exe
+        path: release
 
-  build_macos:
-
-    runs-on: macos-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        host: mac
-        target: desktop
-        version: ${{ env.QT_VERSION }}
-        arch: clang_64
-    - name: Create Makefile
-      run: qmake
-    - name: Build
-      run: make
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
       with:
         name: Wirediff (macOS)
         path: qtwirediff.app
