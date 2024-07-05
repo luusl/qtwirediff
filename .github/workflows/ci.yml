@@ -60,7 +60,3 @@ jobs:
       with:
         name: Wirediff (Windows)
         path: release
-
-      with:
-        name: Wirediff (macOS)
-        path: qtwirediff.app
