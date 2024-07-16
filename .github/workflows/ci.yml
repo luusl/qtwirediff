@@ -11,30 +11,6 @@ env:
   QT_VERSION: 5.15.2
 
 jobs:
-  build_ubuntu:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        host: linux
-        target: desktop
-        version: ${{ env.QT_VERSION }}
-        arch: gcc_64
-    - name: Create Makefile
-      run: qmake
-    - name: Build
-      run: make
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: Wirediff (Ubuntu)
-        path: qtwirediff
-
   build_windows:
 
     runs-on: windows-latest
@@ -54,7 +30,13 @@ jobs:
     - name: Create Makefile
       run: qmake
     - name: Build
-      run: nmake
+      run: |
+        nmake
+        windeployqt qtwirediff.exe --pdb --release --compiler-runtime
+        copy C:\Windows\System32\concrt140.dll . 
+        copy C:\Windows\System32\vccorlib140.dll .
+        copy C:\Windows\System32\msvcp140.dll .
+        copy C:\Windows\System32\vcruntime140.dll .
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
